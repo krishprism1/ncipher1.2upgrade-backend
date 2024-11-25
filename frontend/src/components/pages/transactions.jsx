@@ -7,7 +7,7 @@ function Transactions() {
   const [data, setData] = useState();
   const [load, setLoad] = useState(false);
   const [intervalInMinutes, setIntervalInMinutes] = useState(0); // Default interval in minutes
-  const [countdown, setCountdown] = useState(intervalInMinutes * 60); // Countdown in seconds
+  const [countdown, setCountdown] = useState(intervalInMinutes); // Countdown in seconds
   const [timerId, setTimerId] = useState(null); // Store interval ID for clearing
   const [countdownId, setCountdownId] = useState(null); // Countdown timer ID
 
@@ -16,7 +16,7 @@ function Transactions() {
   }, []);
 
   useEffect(() => {
-    setCountdown(intervalInMinutes * 60); 
+    setCountdown(intervalInMinutes); 
   }, [intervalInMinutes]);
 
   const fetchTx = async () => {
@@ -37,7 +37,7 @@ function Transactions() {
     if (timerId) clearInterval(timerId);
     if (countdownId) clearInterval(countdownId);
 
-    const intervalInMilliseconds = intervalInMinutes * 60 * 1000;
+    const intervalInMilliseconds = intervalInMinutes * 1000;
 
     const id = setInterval(() => {
       fetchTx();
@@ -47,7 +47,7 @@ function Transactions() {
     const countdownTimerId = setInterval(() => {
       setCountdown((prev) => {
         if (prev <= 1) {
-          return intervalInMinutes * 60;
+          return intervalInMinutes;
         }
         return prev - 1;
       });
